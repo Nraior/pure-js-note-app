@@ -1,0 +1,162 @@
+.searchNoteSection{
+
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #eeeff0;
+    border-radius: 14px;
+    font-size: 16px;
+    color: #5b5c5e;
+    background-color: #eeeff0;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;   
+}
+
+.noNewNoteWrapper {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+  * {
+    margin: 5px;
+  }
+}
+
+.noNewNoteIconWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid ;
+  border-radius: 100%;
+  width: 55px;
+  height: 55px;
+  background-color: #1b1c1e;
+  color: white;
+}
+
+.noNewNoteIconInner {
+  display: flex;
+  font-size: large;
+  border: solid 2.5px;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+}
+
+.noNewNoteInfo {
+  text-align: center  ;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.addNewNoteContainer{
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  box-shadow: 2px 1px 5px 0px rgba(200, 200, 200, 1);
+  padding: 15px;
+}
+
+.addNewNoteHeader{
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+
+}
+
+.addNewNoteHeader > button {
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  color: #0f75b8;
+}
+
+.addNewNoteHeader > button:hover {
+text-decoration: underline;
+}
+
+.addNewNoteContainer {
+  textarea{
+    min-height:150px;
+
+  }
+
+
+
+  .addNewNoteFooter{
+    display: flex;
+    justify-content: flex-end;
+
+
+  }
+}
+
+.buttonPrimary {
+  background-color: #6b3c9b;
+  padding: 15px;
+  min-width:70px;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonSecondary {
+  padding: 10px;
+  border: solid 2px #d5d5d6;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 15px;
+
+}
+
+.defaultInput {
+    border: none;
+    margin-bottom: 5px;
+    background-color: #eeeff0;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.defaultInput:focus{
+  background-color: #fff ;
+  outline: solid #545556 2px;
+}
+
+.defaultInput:hover:not(:focus){
+background-color: #dcdee0 ;
+}
+
+.cancelButton {
+
+}
+
+.addNewNoteHeaderButton{
+width: 100%;
+}
+
+
+.note{
+  display: flex;
+  margin: 10px 0;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 1px 5px 0px rgba(200, 200, 200, 1);
+  .noteHeader{
+    display:flex;
+    justify-content: space-between;
+  }
+}
+
+.noteHeaderButtons{
+  display: flex;
+}
+

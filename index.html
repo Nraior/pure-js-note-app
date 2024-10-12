@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>My Website</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <main>
+      <h1>Notes</h1>
+      <input class="searchNoteSection" placeholder="Search notes..."></input>
+      .
+      <button class="buttonPrimary addNewNoteHeaderButton hidden">Add new</button>
+
+      <div class="noNewNoteWrapper">
+        <div class="noNewNoteIconWrapper">
+          <div class="noNewNoteIconInner">
+            i
+          </div> 
+        </div>
+        <h2>No notes yet</h2>
+        <div class="noNewNoteInfo">Add a note to keep track of your learnings.</div>
+        <button class="buttonSecondary addNewNoteButton">I Add Note</button>
+      </div>
+      <div class="addNewNoteContainer hidden">
+        <div class="addNewNoteHeader">
+          <h4 class="addNewNoteHeaderLabel">Add new note</h4>
+          <button href="#" class="cancelAddNewNote">Cancel</button>
+        </div>
+        <input class="defaultInput" placeholder="Note title"/>
+        <textarea class="defaultInput" placeholder="Your note"></textarea>
+        <div class="addNewNoteFooter">
+          <button class="buttonPrimary saveNoteButton">Save</button>
+        </div>
+        </div>
+      <div class="noteElements">
+      <div class="note hidden">
+        <div class="noteHeader">
+          <div class="noteTitle">Title</div>
+            <div class = "noteHeaderButtons">
+              <div class = 'editNote'>Edit</div>
+              <div class = 'removeNote'>Remove</div>
+
+            </div>
+        </div>
+        <div class="noteBody">Note Body</div>
+        <div class="noteDate">Note Date</div>
+      </div>
+    </div>
+    </main>
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>
