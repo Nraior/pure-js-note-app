@@ -1,14 +1,13 @@
-import { NotesHandler } from "./notesHandlerFunctions/notesHandler.js";
+import { NotesHandler } from "./notesHandlerFunctions/NotesHandler.js";
 const notesHandler = new NotesHandler();
 
 const addNoteButton = document.querySelector(".saveNoteButton");
 const addNoteOpenMenu = document.querySelector(".addNewNoteButton");
+const cancelAddNewNote = document.querySelector(".cancelAddNewNote");
+const searchNotes = document.querySelector(".searchNoteSection");
 const addNewNoteHeaderButton = document.querySelector(
   ".addNewNoteHeaderButton"
 );
-
-const cancelAddNewNote = document.querySelector(".cancelAddNewNote");
-const searchNotes = document.querySelector(".searchNoteSection");
 
 addNoteButton.addEventListener("click", (e) => {
   notesHandler.addNewNote();
@@ -16,12 +15,6 @@ addNoteButton.addEventListener("click", (e) => {
 
 addNoteOpenMenu.addEventListener("click", (e) => {
   notesHandler.openCreateMenu();
-  console.log(notesHandler);
-});
-
-addNewNoteHeaderButton.addEventListener("click", (e) => {
-  notesHandler.openCreateMenu();
-  console.log(notesHandler);
 });
 
 cancelAddNewNote.addEventListener("click", (e) => {
@@ -30,4 +23,7 @@ cancelAddNewNote.addEventListener("click", (e) => {
 
 searchNotes.addEventListener("input", (e) => {
   notesHandler.searchNotes(e.target.value);
+});
+addNewNoteHeaderButton.addEventListener("click", (e) => {
+  notesHandler.openCreateMenu();
 });

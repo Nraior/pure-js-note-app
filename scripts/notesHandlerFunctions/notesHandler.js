@@ -1,67 +1,72 @@
-import { NewNoteAdder } from "./newNoteAdder.js";
-import { NoteVisualHandler } from "./noteVisualHandler.js";
 import { LayoutHandler } from "./layoutHandler.js";
 import { Note } from "./Note.js";
 export class NotesHandler {
   notes = {};
-  noteAdder = new NewNoteAdder();
   layoutHandler = new LayoutHandler(this.notes);
-  noteVisualHandler = new NoteVisualHandler(
-    document.querySelector(".note"),
-    document.querySelector(".noteElements")
-  );
-
-  isCreateNoteOpen = false;
 
   currentlyEditedNote = null;
 
-  getNoteName(title, timestamp) {
-    return `${title}-${timestamp}`;
+  handleEditing() {
+    const note = this.currentlyEditedNote;
+
+    this.layoutHandler.handleLayoutChange();
+
+    note.domObj.classList.remove("hidden");
+
+    note.obj.noteTitle = document.querySelector("input.defaultInput").value;
+    note.obj.noteBody = document.querySelector("textarea.defaultInput").value;
+    note.noteVisualHandler.editVisualNote(note);
+
+    this.currentlyEditedNote = null;
+    this.closeCreateMenu();
   }
 
-  addNewNote(fromObj) {
+  addNewNote() {
+    if (this.currentlyEditedNote) {
+      this.handleEditing();
+      return;
+    }
     const noteTitleEditable = document.querySelector("input.defaultInput");
     const noteContentEditable = document.querySelector("textarea.defaultInput");
 
-    if (!noteTitleEditable.value && !noteContentEditable.value && !fromObj) {
-      // early return for no title no text
+    if (!noteTitleEditable.value && !noteContentEditable.value) {
       return;
     }
 
-    const createdNoteObj = fromObj
-      ? fromObj
-      : this.noteAdder.createNewNote(
-          noteTitleEditable.value,
-          noteContentEditable.value
-        );
-
-    const createdNoteName = this.getNoteName(
-      createdNoteObj.noteTitle,
-      createdNoteObj.timestamp
-    );
-    const createdNote = this.noteVisualHandler.createVisualNote(createdNoteObj);
-    this.notes[createdNoteName] = new Note(
-      createdNoteName,
-      createdNoteObj,
-      createdNote
+    const createdNoteObject = new Note(
+      noteTitleEditable.value,
+      noteContentEditable.value
     );
 
-    this.noteVisualHandler.addEditAndRemoveHandlers(
-      this.notes[createdNoteName],
+    const createdNoteDOM = createdNoteObject.noteVisualHandler.createVisualNote(
+      createdNoteObject.obj
+    );
+    createdNoteObject.assignDOMObject(createdNoteDOM);
+
+    this.notes[createdNoteObject.identifier] = createdNoteObject;
+    createdNoteObject.noteVisualHandler.addEditAndRemoveHandlers(
+      createdNoteObject,
       this.editNote.bind(this),
       this.removeNote.bind(this)
     );
 
     this.closeCreateMenu();
-    this.layoutHandler.updateLayout();
+    this.layoutHandler.handleLayoutChange();
+    this.currentlyEditedNote = null;
   }
 
   searchNotes(searchText) {
     Object.keys(this.notes).forEach((noteKey) => {
       const note = this.notes[noteKey];
+      if (!note) {
+        return;
+      }
       const textToSearchIn = `${note.obj.noteTitle} ${note.obj.noteBody}`;
 
-      if (textToSearchIn.includes(searchText)) {
+      if (
+        textToSearchIn.toLowerCase().includes(searchText.toLowerCase()) &&
+        note !== this.currentlyEditedNote
+      ) {
         note.domObj.classList.remove("hidden");
       } else {
         note.domObj.classList.add("hidden");
@@ -91,18 +96,17 @@ export class NotesHandler {
 
     noteObj.domObj.remove();
 
-    this.layoutHandler.updateLayout();
+    this.layoutHandler.handleLayoutChange();
   }
 
   openCreateMenu() {
-    this.isCreateNoteOpen = true;
-    this.layoutHandler.handleOpenNoteCreator(this.isCreateNoteOpen);
+    this.layoutHandler.handleOpenNoteCreator(true);
   }
 
   cancelAddNewNote() {
-    // if we are editing
     if (this.currentlyEditedNote) {
       this.showNote(this.currentlyEditedNote);
+      this.currentlyEditedNote = null;
     }
     this.closeCreateMenu();
   }
@@ -113,7 +117,6 @@ export class NotesHandler {
 
     noteTitleEditable.value = "";
     noteContentEditable.value = "";
-    this.isCreateNoteOpen = false;
-    this.layoutHandler.handleOpenNoteCreator(this.isCreateNoteOpen);
+    this.layoutHandler.handleOpenNoteCreator(false);
   }
 }

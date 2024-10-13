@@ -10,18 +10,25 @@ export class NoteVisualHandler {
     this.noteContainer = defaultNoteCotainer;
   }
 
-  createVisualNote(noteObj) {
-    console.log("try to add note");
-    const clonedNode = this.node.cloneNode(true);
+  editVisualNote(note) {
+    const dom = note.domObj;
+    const contentObj = note.obj;
+    dom.querySelector(".noteTitle").innerText = contentObj.noteTitle;
+    dom.querySelector(".noteBody").innerText = contentObj.noteBody;
+    dom.querySelector(".noteDate").innerText = `${
+      MONTHS_NAMES[contentObj.date.month]
+    } ${contentObj.date.day}`;
+  }
 
-    console.log(noteObj);
+  createVisualNote(noteObj) {
+    const clonedNode = this.node.cloneNode(true);
 
     clonedNode.querySelector(".noteTitle").innerText = noteObj.noteTitle;
     clonedNode.querySelector(".noteBody").innerText = noteObj.noteBody;
     clonedNode.querySelector(".noteDate").innerText = `${
       MONTHS_NAMES[noteObj.date.month]
     } ${noteObj.date.day}`;
-    clonedNode.classList.toggle("hidden");
+    clonedNode.classList.remove("hidden");
 
     this.notesDOM.push(clonedNode);
     this.noteContainer.prepend(clonedNode);
@@ -40,9 +47,5 @@ export class NoteVisualHandler {
     removeNote.addEventListener("click", (e) => {
       onRemove(note);
     });
-  }
-
-  removeVisualNote(noteObj) {
-    console.log("try to remove note");
   }
 }

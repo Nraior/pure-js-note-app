@@ -7,25 +7,12 @@ export class LayoutHandler {
     this.notes = notesReference;
   }
 
-  handleLayoutChange(layoutWithNotes, noNotesLayout) {
+  handleLayoutChange() {
     if (Object.keys(this.notes).length > NO_NOTES) {
-      console.log("Rearrange layout for one note");
-      layoutWithNotes?.();
+      this.handleAtLeastOneNote();
     } else {
-      noNotesLayout?.();
-      console.log("No new notes layout");
+      this.handleNoNotesYet();
     }
-  }
-
-  updateLayout() {
-    this.handleLayoutChange(
-      () => {
-        this.handleAtLeastOneNote();
-      },
-      () => {
-        this.handleNoNotesYet();
-      }
-    );
   }
 
   handleAtLeastOneNote() {
@@ -43,18 +30,15 @@ export class LayoutHandler {
       ".addNewNoteHeaderButton"
     );
     const noNewNoteWrapper = document.querySelector(".noNewNoteWrapper");
-    console.log("nonewNotewrapper", noNewNoteWrapper);
     noNewNoteWrapper.classList.remove("hidden");
     addNewNotePrimaryButton.classList.add("hidden");
   }
 
   handleOpenNoteCreator(open) {
     const noteCreatorWindow = document.querySelector(".addNewNoteContainer");
-    console.log(open);
     open
       ? noteCreatorWindow.classList.remove("hidden")
       : noteCreatorWindow.classList.add("hidden");
-    console.log("open note creator");
   }
 
   updateEditMenuContent(noteObj) {
@@ -65,6 +49,5 @@ export class LayoutHandler {
     addNewNoteHeader.innerText = "Edit node";
     noteTitle.value = noteObj.obj.noteTitle;
     noteBody.value = noteObj.obj.noteBody;
-    console.log("noteObj", noteObj);
   }
 }
