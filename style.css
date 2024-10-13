@@ -1,16 +1,28 @@
 html, body{
   margin: 0;
 }
-.searchNoteSection{
 
+main {
+  padding: 30px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.pageHeaderText {
+  margin-left:5px;
+}
+.searchNoteSection{
     width: 100%;
     box-sizing: border-box;
     border: 2px solid #eeeff0;
     border-radius: 14px;
-    font-size: 16px;
+    font-size: 1em;
     color: #5b5c5e;
     background-color: #eeeff0;
-    background-image: url('searchicon.png');
+    background-image: url('icons/icons8-search-50.png');
+    background-size: 25px;
     background-position: 10px 10px; 
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;   
@@ -42,7 +54,7 @@ html, body{
 
 .noNewNoteIconInner {
   display: flex;
-  font-size: large;
+  font-size: 1em;
   border: solid 2.5px;
   border-radius: 100%;
   width: 25px;
@@ -111,16 +123,32 @@ text-decoration: underline;
   cursor: pointer;
 }
 
+.buttonPrimary:hover{
+  background-color: #834dba;
+  }
+  
+  .buttonSecondary:active{
+    background-color: #5b2f87;
+  }
+
+
 .buttonSecondary {
   padding: 10px;
   border: solid 2px #d5d5d6;
   background-color: white;
   cursor: pointer;
   border-radius: 15px;
-
 }
 
-.defaultInput {
+.buttonSecondary:hover{
+  background-color: #e7e7e7;
+  }
+  
+  .buttonSecondary:active{
+  background-color: #bcbcbc;
+  }
+
+input, textarea {
     border: none;
     margin-bottom: 5px;
     background-color: #eeeff0;
@@ -128,12 +156,12 @@ text-decoration: underline;
     padding: 10px;
 }
 
-.defaultInput:focus{
+input:focus, textarea:focus{
   background-color: #fff ;
   outline: solid #545556 2px;
 }
 
-.defaultInput:hover:not(:focus){
+input:hover:not(:focus), textarea:hover:not(:focus){
 background-color: #dcdee0 ;
 }
 
@@ -163,6 +191,18 @@ width: 100%;
   display: flex;
 }
 
+.noteHeaderButtons button {
+  border: none;
+  background: none;
+  margin: 5px 0;
+}
+
+.noteDate {
+  margin-top:20px;
+  color: #5b5c5e;
+  font-size: 0.9em;
+}
+
 .deleteNoteModal{
   position: fixed;
   width: 100vw;
@@ -182,11 +222,13 @@ width: 100%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    padding: 15px;
+    padding: 30px;
+    margin: 10px;
     overflow: hidden;
   }
 
   .deleteNoteModalButtons{
+    margin-top:25px;
     display: flex;
     align-items: center;
     justify-content:space-between;
@@ -196,5 +238,5 @@ width: 100%;
       margin: 5px;
       max-width:200px;
     }
-    }
+  }
 }

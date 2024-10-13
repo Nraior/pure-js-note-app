@@ -7,10 +7,12 @@
     <title>My Website</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
   </head>
   <body>
     <main>
-      <h1>Notes</h1>
+      <h1><i class="fa-regular fa-file"></i> <span class="pageHeaderText">Notes</span></h1>
       <input class="searchNoteSection" placeholder="Search notes..."></input>
       .
       <button class="buttonPrimary addNewNoteHeaderButton hidden">Add new</button>
@@ -23,7 +25,7 @@
         </div>
         <h2>No notes yet</h2>
         <div class="noNewNoteInfo">Add a note to keep track of your learnings.</div>
-        <button class="buttonSecondary addNewNoteButton">I Add Note</button>
+        <button class="buttonSecondary addNewNoteButton"><i class="fa-solid fa-file-circle-plus"></i> Add Note</button>
       </div>
       <div class="addNewNoteContainer hidden">
         <div class="addNewNoteHeader">
@@ -39,10 +41,10 @@
       <div class="noteElements">
       <div class="note hidden">
         <div class="noteHeader">
-          <div class="noteTitle">Title</div>
+          <h4 class="noteTitle">Title</h4>
             <div class = "noteHeaderButtons">
-              <div class = 'editNote'>Edit</div>
-              <div class = 'removeNote'>Remove</div>
+              <button class = 'editNote'><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class = 'removeNote'><i class="fa-solid fa-trash"></i></button>
 
             </div>
         </div>
@@ -51,13 +53,14 @@
       </div>
     </div>
 
+    </main>
     <div class="deleteNoteModal hidden">
       <div class="deleteNoteModalContent">
 
         <h3 class="deleteNoteModalHeader">
           Delete Note
         </h3>
-        <div class="deleteNoteModalContent">
+        <div class="deleteNoteModalContentText">
           Are you sure you want to delete this note?
         </div>
 
@@ -68,7 +71,7 @@
         </div>
       </div>
     </div>
-    </main>
+
     <script type="module" src="scripts/main.js"></script>
   </body>
 </html>
