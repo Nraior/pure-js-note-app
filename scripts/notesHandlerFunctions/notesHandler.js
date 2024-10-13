@@ -13,25 +13,27 @@ export class NotesHandler {
 
   isCreateNoteOpen = false;
 
-  isEditing = false;
+  currentlyEditedNote = null;
 
   getNoteName(title, timestamp) {
     return `${title}-${timestamp}`;
   }
 
-  addNewNote(editCurrent = false) {
+  addNewNote(fromObj) {
     const noteTitleEditable = document.querySelector("input.defaultInput");
     const noteContentEditable = document.querySelector("textarea.defaultInput");
 
-    if (!noteTitleEditable.value && !noteContentEditable.value) {
+    if (!noteTitleEditable.value && !noteContentEditable.value && !fromObj) {
       // early return for no title no text
       return;
     }
 
-    const createdNoteObj = this.noteAdder.createNewNote(
-      noteTitleEditable.value,
-      noteContentEditable.value
-    );
+    const createdNoteObj = fromObj
+      ? fromObj
+      : this.noteAdder.createNewNote(
+          noteTitleEditable.value,
+          noteContentEditable.value
+        );
 
     const createdNoteName = this.getNoteName(
       createdNoteObj.noteTitle,
@@ -71,7 +73,17 @@ export class NotesHandler {
     this.isEditing = true;
     this.layoutHandler.handleOpenNoteCreator(this.isEditing);
     this.layoutHandler.updateEditMenuContent(noteObj);
-    this.removeNote(noteObj);
+    //this.removeNote(noteObj);
+    this.hideNote(noteObj);
+    this.currentlyEditedNote = noteObj;
+  }
+
+  hideNote(noteObj) {
+    noteObj.domObj.classList.add("hidden");
+  }
+
+  showNote(noteObj) {
+    noteObj.domObj.classList.remove("hidden");
   }
 
   removeNote(noteObj) {
@@ -85,6 +97,14 @@ export class NotesHandler {
   openCreateMenu() {
     this.isCreateNoteOpen = true;
     this.layoutHandler.handleOpenNoteCreator(this.isCreateNoteOpen);
+  }
+
+  cancelAddNewNote() {
+    // if we are editing
+    if (this.currentlyEditedNote) {
+      this.showNote(this.currentlyEditedNote);
+    }
+    this.closeCreateMenu();
   }
 
   closeCreateMenu() {

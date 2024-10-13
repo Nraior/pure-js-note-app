@@ -24,8 +24,6 @@ export class NoteVisualHandler {
     clonedNode.classList.toggle("hidden");
 
     this.notesDOM.push(clonedNode);
-    // Edit cloned element
-    //
     this.noteContainer.prepend(clonedNode);
 
     return clonedNode;

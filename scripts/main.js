@@ -25,7 +25,7 @@ addNewNoteHeaderButton.addEventListener("click", (e) => {
 });
 
 cancelAddNewNote.addEventListener("click", (e) => {
-  notesHandler.closeCreateMenu();
+  notesHandler.cancelAddNewNote();
 });
 
 searchNotes.addEventListener("input", (e) => {
