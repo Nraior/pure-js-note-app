@@ -41,13 +41,49 @@ export class LayoutHandler {
       : noteCreatorWindow.classList.add("hidden");
   }
 
-  updateEditMenuContent(noteObj) {
+  updateEditMenuContent(noteHeader = "Add new note", noteObj) {
     const addNewNoteHeader = document.querySelector(".addNewNoteHeaderLabel");
     const noteTitle = document.querySelector(".addNewNoteContainer input");
     const noteBody = document.querySelector(".addNewNoteContainer textarea");
 
-    addNewNoteHeader.innerText = "Edit node";
-    noteTitle.value = noteObj.obj.noteTitle;
-    noteBody.value = noteObj.obj.noteBody;
+    addNewNoteHeader.innerText = noteHeader;
+    noteTitle.value = noteObj ? noteObj.obj.noteTitle : "";
+    noteBody.value = noteObj ? noteObj.obj.noteBody : "";
+  }
+
+  closeCreateMenu() {
+    const noteTitleEditable = document.querySelector("input.defaultInput");
+    const noteContentEditable = document.querySelector("textarea.defaultInput");
+
+    noteTitleEditable.value = "";
+    noteContentEditable.value = "";
+    this.handleOpenNoteCreator(false);
+  }
+
+  showHideDeleteConfirmation(show) {
+    const modal = document.querySelector(".deleteNoteModal");
+
+    if (show) {
+      modal.classList.remove("hidden");
+    } else {
+      modal.classList.add("hidden");
+    }
+  }
+
+  addEventListenersOnModal(onCancel, onDelete) {
+    const cancelButton = document.querySelector(
+      ".deleteNoteModalButtons .buttonSecondary"
+    );
+    const deleteButton = document.querySelector(
+      ".deleteNoteModalButtons .buttonPrimary"
+    );
+
+    cancelButton.addEventListener("click", (e) => {
+      onCancel();
+    });
+
+    deleteButton.addEventListener("click", (e) => {
+      onDelete();
+    });
   }
 }

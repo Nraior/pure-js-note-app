@@ -4,7 +4,6 @@ export class NoteVisualHandler {
   node = null;
   noteContainer = null;
   notesDOM = [];
-  // I18N possibility
   constructor(defaultNoteNode, defaultNoteCotainer) {
     this.node = defaultNoteNode;
     this.noteContainer = defaultNoteCotainer;
@@ -47,5 +46,13 @@ export class NoteVisualHandler {
     removeNote.addEventListener("click", (e) => {
       onRemove(note);
     });
+  }
+
+  hideNote(noteObj) {
+    noteObj.domObj.classList.add("hidden");
+  }
+
+  showNote(noteObj) {
+    noteObj.domObj.classList.remove("hidden");
   }
 }

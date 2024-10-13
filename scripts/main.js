@@ -10,11 +10,11 @@ const addNewNoteHeaderButton = document.querySelector(
 );
 
 addNoteButton.addEventListener("click", (e) => {
-  notesHandler.addNewNote();
+  notesHandler.handleAddEditNote();
 });
 
 addNoteOpenMenu.addEventListener("click", (e) => {
-  notesHandler.openCreateMenu();
+  notesHandler.openCreateNoteMenu();
 });
 
 cancelAddNewNote.addEventListener("click", (e) => {
@@ -25,5 +25,10 @@ searchNotes.addEventListener("input", (e) => {
   notesHandler.searchNotes(e.target.value);
 });
 addNewNoteHeaderButton.addEventListener("click", (e) => {
-  notesHandler.openCreateMenu();
+  notesHandler.openCreateNoteMenu();
 });
+
+notesHandler.layoutHandler.addEventListenersOnModal(
+  () => notesHandler.layoutHandler.showHideDeleteConfirmation(false),
+  () => notesHandler.confirmRemoveNote()
+);

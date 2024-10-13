@@ -3,29 +3,28 @@ import { Note } from "./Note.js";
 export class NotesHandler {
   notes = {};
   layoutHandler = new LayoutHandler(this.notes);
-
   currentlyEditedNote = null;
+  searchText = "";
+
+  handleAddEditNote() {
+    this.currentlyEditedNote ? this.handleEditing() : this.addNewNote();
+  }
 
   handleEditing() {
     const note = this.currentlyEditedNote;
 
     this.layoutHandler.handleLayoutChange();
-
-    note.domObj.classList.remove("hidden");
-
+    note.noteVisualHandler.showNote(note);
     note.obj.noteTitle = document.querySelector("input.defaultInput").value;
     note.obj.noteBody = document.querySelector("textarea.defaultInput").value;
     note.noteVisualHandler.editVisualNote(note);
 
     this.currentlyEditedNote = null;
-    this.closeCreateMenu();
+    this.currentlyDeletedNote = null;
+    this.layoutHandler.closeCreateMenu();
   }
 
   addNewNote() {
-    if (this.currentlyEditedNote) {
-      this.handleEditing();
-      return;
-    }
     const noteTitleEditable = document.querySelector("input.defaultInput");
     const noteContentEditable = document.querySelector("textarea.defaultInput");
 
@@ -44,18 +43,37 @@ export class NotesHandler {
     createdNoteObject.assignDOMObject(createdNoteDOM);
 
     this.notes[createdNoteObject.identifier] = createdNoteObject;
+
     createdNoteObject.noteVisualHandler.addEditAndRemoveHandlers(
       createdNoteObject,
-      this.editNote.bind(this),
-      this.removeNote.bind(this)
+      this.openEditNoteMenu.bind(this),
+      this.askForRemoveNote.bind(this)
     );
 
-    this.closeCreateMenu();
+    this.layoutHandler.closeCreateMenu();
     this.layoutHandler.handleLayoutChange();
     this.currentlyEditedNote = null;
+    this.searchNotes(this.searchText);
+  }
+
+  askForRemoveNote(obj) {
+    this.currentlyDeletedNote = obj;
+    this.layoutHandler.showHideDeleteConfirmation(true);
+  }
+
+  confirmRemoveNote() {
+    this.removeNote(this.currentlyDeletedNote);
+    this.layoutHandler.showHideDeleteConfirmation(false);
+  }
+
+  removeNote(noteObj) {
+    delete this.notes[noteObj.identifier];
+    noteObj.domObj.remove();
+    this.layoutHandler.handleLayoutChange();
   }
 
   searchNotes(searchText) {
+    this.searchText = searchText;
     Object.keys(this.notes).forEach((noteKey) => {
       const note = this.notes[noteKey];
       if (!note) {
@@ -67,56 +85,42 @@ export class NotesHandler {
         textToSearchIn.toLowerCase().includes(searchText.toLowerCase()) &&
         note !== this.currentlyEditedNote
       ) {
-        note.domObj.classList.remove("hidden");
+        note.noteVisualHandler.showNote(note);
       } else {
-        note.domObj.classList.add("hidden");
+        note.noteVisualHandler.hideNote(note);
       }
     });
   }
 
-  editNote(noteObj) {
+  openEditNoteMenu(noteObj) {
+    if (this.currentlyEditedNote) {
+      this.cancelAddNewNote();
+    }
+
     this.isEditing = true;
     this.layoutHandler.handleOpenNoteCreator(this.isEditing);
-    this.layoutHandler.updateEditMenuContent(noteObj);
-    //this.removeNote(noteObj);
-    this.hideNote(noteObj);
+    this.layoutHandler.updateEditMenuContent("Edit note", noteObj);
+    noteObj.noteVisualHandler.hideNote(noteObj);
+
     this.currentlyEditedNote = noteObj;
   }
 
-  hideNote(noteObj) {
-    noteObj.domObj.classList.add("hidden");
-  }
+  openCreateNoteMenu() {
+    if (this.currentlyEditedNote) {
+      this.cancelAddNewNote();
+    }
 
-  showNote(noteObj) {
-    noteObj.domObj.classList.remove("hidden");
-  }
-
-  removeNote(noteObj) {
-    delete this.notes[noteObj.identifier];
-
-    noteObj.domObj.remove();
-
-    this.layoutHandler.handleLayoutChange();
-  }
-
-  openCreateMenu() {
     this.layoutHandler.handleOpenNoteCreator(true);
+    this.layoutHandler.updateEditMenuContent();
   }
 
   cancelAddNewNote() {
     if (this.currentlyEditedNote) {
-      this.showNote(this.currentlyEditedNote);
+      this.currentlyEditedNote.noteVisualHandler.showNote(
+        this.currentlyEditedNote
+      );
       this.currentlyEditedNote = null;
     }
-    this.closeCreateMenu();
-  }
-
-  closeCreateMenu() {
-    const noteTitleEditable = document.querySelector("input.defaultInput");
-    const noteContentEditable = document.querySelector("textarea.defaultInput");
-
-    noteTitleEditable.value = "";
-    noteContentEditable.value = "";
-    this.layoutHandler.handleOpenNoteCreator(false);
+    this.layoutHandler.closeCreateMenu();
   }
 }
